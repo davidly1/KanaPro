@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import Button from './components/Button'
 import Input from './components/Input'
+import StyledSwitch from './components/StyledSwitch'
 
 function App() {
   const katakana = [
@@ -93,9 +93,10 @@ function App() {
     setLetter(randomLetter)
   }
 
-  const handleChange = (e: any) => setInput(e.target.value)
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setInput(e.target.value)
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (input.toLowerCase() === katakana[letter].romanji) {
       setStreak(streak + 1)
@@ -129,12 +130,15 @@ function App() {
   }, [])
 
   return (
-    <div
-      className={`h-screen flex flex-col justify-center items-center ${
-        isLight ? 'bg-slate-200' : 'bg-slate-800'
-      } text-white text-center`}
-    >
-      <div className='-mt-32'>
+    <div className={`h-screen ${isLight ? 'bg-slate-200' : 'bg-slate-800'}`}>
+      <div className='flex flex-row justify-end px-12 pt-4'>
+        <StyledSwitch onChange={handleButtonClick} />
+      </div>
+      <div
+        className={`h-full flex flex-col justify-center items-center -mt-32 ${
+          isLight ? 'bg-slate-200' : 'bg-slate-800'
+        } text-white text-center`}
+      >
         <div className='p-6 mb-8'>
           <h1
             className={`text-4xl font-bold uppercase ${
@@ -162,7 +166,7 @@ function App() {
           {katakana[letter].katakana}
         </div>
 
-        <div className='mb-8'>
+        <div className='mb-8 font-semibold'>
           <form onSubmit={handleSubmit}>
             <Input
               input={input}
@@ -176,7 +180,6 @@ function App() {
             {errorMsg}
           </p>
         )}
-        <Button isLight={isLight} handleButtonClick={handleButtonClick} />
       </div>
     </div>
   )
