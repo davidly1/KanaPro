@@ -119,10 +119,6 @@ function App() {
     setRandomKatakana()
   }
 
-  const handleButtonClick = () => {
-    isLight ? setIsLight(false) : setIsLight(true)
-  }
-
   useEffect(() => {
     setRandomKatakana()
     setStreak(parseInt(sessionStorage.getItem('streak') as string) || 0)
@@ -132,7 +128,7 @@ function App() {
   return (
     <div className={`h-screen ${isLight ? 'bg-slate-200' : 'bg-slate-800'}`}>
       <div className='flex flex-row justify-end px-12 pt-4'>
-        <StyledSwitch onChange={handleButtonClick} />
+        <StyledSwitch onChange={() => setIsLight(!isLight)} />
       </div>
       <div
         className={`h-full flex flex-col justify-center items-center -mt-32 ${
